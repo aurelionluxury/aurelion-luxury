@@ -1,0 +1,227 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SiteSetting {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Page {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  title       String
+  metaTitle   String?
+  metaDesc    String?
+  content     String?
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Property {
+  id            Int      @id @default(autoincrement())
+  title         String
+  slug          String   @unique
+  description   String?
+  location      String
+  area          String
+  type          String
+  status        String   @default("available")
+  price         Float
+  priceLabel    String?
+  bedrooms      Int?
+  bathrooms     Int?
+  carpetArea    Float?
+  builtUpArea   Float?
+  floor         Int?
+  totalFloors   Int?
+  facing        String?
+  amenities     String?
+  images        String?
+  featured      Boolean  @default(false)
+  developerName String?
+  reraNumber    String?
+  possession    String?
+  typology      String?
+  config        String?
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model MicroMarket {
+  id           Int      @id @default(autoincrement())
+  name         String
+  slug         String   @unique
+  zone         String
+  description  String?
+  content      String?
+  avgPrice     Float?
+  priceRange   String?
+  appreciation String?
+  connectivity String?
+  landmarks    String?
+  images       String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Vehicle {
+  id            Int      @id @default(autoincrement())
+  title         String
+  slug          String   @unique
+  description   String?
+  make          String
+  model         String
+  year          Int
+  variant       String?
+  type          String
+  condition     String
+  status        String   @default("available")
+  price         Float
+  priceLabel    String?
+  mileage       Int?
+  fuel          String?
+  transmission  String?
+  color         String?
+  interiorColor String?
+  engine        String?
+  power         String?
+  features      String?
+  images        String?
+  featured      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model FinancialService {
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String   @unique
+  category    String
+  description String?
+  content     String?
+  icon        String?
+  features    String?
+  partners    String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Post {
+  id          Int       @id @default(autoincrement())
+  title       String
+  slug        String    @unique
+  excerpt     String?
+  content     String?
+  category    String
+  coverImage  String?
+  tags        String?
+  isPublished Boolean   @default(false)
+  publishedAt DateTime?
+  metaTitle   String?
+  metaDesc    String?
+  author      String    @default("Aurelion Luxury")
+  views       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Testimonial {
+  id          Int      @id @default(autoincrement())
+  name        String
+  designation String?
+  company     String?
+  content     String
+  rating      Int      @default(5)
+  image       String?
+  category    String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model FAQ {
+  id        Int      @id @default(autoincrement())
+  question  String
+  answer    String
+  category  String
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Gallery {
+  id        Int      @id @default(autoincrement())
+  title     String?
+  url       String
+  alt       String?
+  category  String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Lead {
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String?
+  phone      String
+  service    String
+  message    String?
+  source     String?
+  propertyId Int?
+  vehicleId  Int?
+  budget     String?
+  status     String   @default("new")
+  notes      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  title     String
+  bio       String?
+  image     String?
+  email     String?
+  linkedin  String?
+  phone     String?
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MarketTicker {
+  id        Int      @id @default(autoincrement())
+  label     String
+  value     String
+  change    String?
+  trend     String?
+  category  String?
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
