@@ -32,6 +32,6 @@ export default async function BlogPostPage({ params }: { params: Params }) {
     }),
   ]);
   if (!post) notFound();
-  const relatedFiltered = related.filter((p) => p.id !== post.id).slice(0, 3);
+  const relatedFiltered = related.filter((p: any) => p.id !== post.id).slice(0, 3);
   return <BlogPostClient post={post} related={relatedFiltered} />;
 }
