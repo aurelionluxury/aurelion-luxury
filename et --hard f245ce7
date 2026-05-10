@@ -1,0 +1,15 @@
+[33m96b4165[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Revert to working deployment
+[33m74a9b68[m Revert to working deployment
+[33m00931e1[m Remove prisma config for v5
+[33m246d355[m Fix schema url for Prisma v5
+[33m0385fca[m Fix Prisma v5 config
+[33m7e5e9ea[m Downgrade Prisma to stable v5
+[33m67e26de[m Fix Prisma client for PostgreSQL
+[33m43d35d7[m Fix Prisma 7.5 config
+[33m08a5c11[m Add DATABASE_URL to schema
+[33m7a6cf11[m Fix Prisma to use PostgreSQL
+[33m370269a[m Trigger redeploy with database
+[33m2e501e2[m Switch to PostgreSQL database
+[33mf245ce7[m Add prisma generate to build script
+[33m5cd0be5[m Fresh deploy
+[33m2ea7487[m Deploy aurelion luxury
