@@ -1,25 +1,13 @@
 import { PrismaClient } from "@prisma/client";
-import { PrismaLibSql } from "@prisma/adapter-libsql";
-import { createClient } from "@libsql/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
 function createPrismaClient() {
-  const databaseUrl = process.env.DATABASE_URL!;
-  
-  if (databaseUrl.startsWith("postgresql") || databaseUrl.startsWith("postgres")) {
-    const { Pool } = require("pg");
-    const { PrismaPg } = require("@prisma/adapter-pg");
-    const pool = new Pool({ connectionString: databaseUrl });
-    const adapter = new PrismaPg(pool);
-    return new PrismaClient({ adapter } as any);
-  }
-  
-  const client = createClient({ url: databaseUrl });
-  const adapter = new PrismaLibSql(client);
-  return new PrismaClient({ adapter } as any);
+  const adapter = new PrismaPg(process.env.DATABASE_URL!);
+  return new PrismaClient({ adapter });
 }
 
 export const prisma = globalForPrisma.prisma ?? createPrismaClient();
