@@ -1,14 +1,12 @@
+import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
-import { PrismaLibSql } from "@prisma/adapter-libsql";
+import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcryptjs";
 import path from "path";
 import { pathToFileURL } from "url";
 
-const dbPath = path.join(process.cwd(), "dev.db");
-const dbUrl = pathToFileURL(dbPath).href;
-const adapter = new PrismaLibSql({ url: dbUrl });
-const prisma = new PrismaClient({ adapter } as ConstructorParameters<typeof PrismaClient>[0]);
-
+const adapter = new PrismaPg(process.env.DATABASE_URL!);
+const prisma = new PrismaClient({ adapter });
 async function main() {
   console.log("Seeding database...");
 
