@@ -28,7 +28,7 @@ const primaryLinks = [
 const moreLinks = [
   { label: "About Us", href: "/about" },
   { label: "Our Team", href: "/team" },
-  { label: "Our Brokerage Model", href: "/brokerage" },
+  { label: "Our Advisory Model", href: "/advisory fee" },
   { label: "NRI Buyers Guide", href: "/nri-guide" },
   { label: "FAQ", href: "/faq" },
 ];
@@ -37,7 +37,7 @@ const allMobileLinks = [
   ...primaryLinks,
   { label: "About", href: "/about", sub: undefined },
   { label: "Our Team", href: "/team", sub: undefined },
-  { label: "Brokerage", href: "/brokerage", sub: undefined },
+  { label: "Advisory Model", href: "/advisory fee", sub: undefined },
   { label: "NRI Guide", href: "/nri-guide", sub: undefined },
   { label: "FAQ", href: "/faq", sub: undefined },
 ];
