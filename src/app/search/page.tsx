@@ -123,10 +123,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function ResultCard({ href, title, subtitle, tag, meta }: { href: string; title: string; subtitle: string; tag: string; meta?: string }) {
   return (
-    <Link href={href} style={{ textDecoration: "none", display: "block", padding: "20px 24px", border: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.02)", transition: "border-color 0.2s" }}
-      onMouseEnter={e => (e.currentTarget as HTMLElement).style.borderColor = "rgba(212,175,55,0.3)"}
-      onMouseLeave={e => (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.06)"}
-    >
+    <Link href={href} style={{ textDecoration: "none", display: "block", padding: "20px 24px", border: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.02)" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16 }}>
         <div>
           <p style={{ fontSize: 15, color: "rgba(255,255,255,0.88)", marginBottom: 6, fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>{title}</p>
