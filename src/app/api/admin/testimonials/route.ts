@@ -24,5 +24,7 @@ export async function POST(req: NextRequest) {
       isActive: body.isActive !== false,
     },
   });
+  const { revalidatePath } = await import("next/cache");
+revalidatePath("/");
   return NextResponse.json(t, { status: 201 });
 }
