@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const primaryLinks = [
@@ -28,7 +29,7 @@ const primaryLinks = [
 const moreLinks = [
   { label: "About Us", href: "/about" },
   { label: "Our Team", href: "/team" },
-  { label: "Our Advisory Model", href: "/advisory fee" },
+  { label: "Our Advisory Model", href: "/brokerage" },
   { label: "NRI Buyers Guide", href: "/nri-guide" },
   { label: "FAQ", href: "/faq" },
 ];
@@ -37,7 +38,7 @@ const allMobileLinks = [
   ...primaryLinks,
   { label: "About", href: "/about", sub: undefined },
   { label: "Our Team", href: "/team", sub: undefined },
-  { label: "Advisory Model", href: "/advisory fee", sub: undefined },
+  { label: "Advisory Model", href: "/brokerage", sub: undefined },
   { label: "NRI Guide", href: "/nri-guide", sub: undefined },
   { label: "FAQ", href: "/faq", sub: undefined },
 ];
@@ -46,7 +47,10 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
@@ -56,6 +60,15 @@ export default function Navbar() {
 
   const openDrop = (label: string) => { if (timerRef.current) clearTimeout(timerRef.current); setActiveDropdown(label); };
   const closeDrop = () => { timerRef.current = setTimeout(() => setActiveDropdown(null), 120); };
+
+  function handleSearch(e: React.FormEvent) {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchOpen(false);
+      setSearchQuery("");
+    }
+  }
 
   const navBg = scrolled ? "rgba(10,10,12,0.95)" : "transparent";
   const navBorder = scrolled ? "1px solid rgba(212,175,55,0.1)" : "1px solid transparent";
@@ -88,8 +101,7 @@ export default function Navbar() {
               <Link href={link.href} style={{
                 fontSize: 13, letterSpacing: "0.06em", textTransform: "uppercase", fontWeight: 400,
                 color: "rgba(255,255,255,0.6)", textDecoration: "none", whiteSpace: "nowrap",
-                display: "flex", alignItems: "center", gap: 4,
-                transition: "color 0.2s",
+                display: "flex", alignItems: "center", gap: 4, transition: "color 0.2s",
               }}
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#D4AF37"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"; }}
@@ -162,20 +174,33 @@ export default function Navbar() {
           <Link href="/contact" style={{
             border: "1px solid #D4AF37", color: "#D4AF37", background: "transparent",
             fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 400,
-            padding: "8px 16px", textDecoration: "none", borderRadius: 2,
-            transition: "all 0.3s ease",
+            padding: "8px 16px", textDecoration: "none", borderRadius: 2, transition: "all 0.3s ease",
           }}
             onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = "#D4AF37"; el.style.color = "#0a0a0c"; }}
             onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = "transparent"; el.style.color = "#D4AF37"; }}
           >
             Book Consultation
           </Link>
-          <button aria-label="Search" style={{ width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(255,255,255,0.4)", background: "none", border: "none", cursor: "pointer", transition: "color 0.2s" }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#D4AF37"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.4)"; }}
-          >
-            <svg viewBox="0 0 20 20" fill="none" width="15" height="15"><circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" strokeWidth="1.4"/><path d="M13 13l3.5 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
-          </button>
+
+          {searchOpen ? (
+            <form onSubmit={handleSearch} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <input
+                autoFocus
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder="Search..."
+                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(212,175,55,0.3)", outline: "none", color: "rgba(255,255,255,0.8)", padding: "6px 12px", fontSize: 13, width: 180, fontFamily: "'DM Sans', sans-serif" }}
+              />
+              <button type="button" onClick={() => { setSearchOpen(false); setSearchQuery(""); }} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.4)", fontSize: 18, padding: 4 }}>✕</button>
+            </form>
+          ) : (
+            <button aria-label="Search" onClick={() => setSearchOpen(true)} style={{ width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(255,255,255,0.4)", background: "none", border: "none", cursor: "pointer", transition: "color 0.2s" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#D4AF37"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.4)"; }}
+            >
+              <svg viewBox="0 0 20 20" fill="none" width="15" height="15"><circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" strokeWidth="1.4"/><path d="M13 13l3.5 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+            </button>
+          )}
         </div>
 
         {/* Mobile hamburger */}
