@@ -131,7 +131,7 @@ const feeCards = [
     icon: <BuildingIcon />,
     title: "Real Estate Advisory",
     points: [
-      "New construction: Zero brokerage to buyer. Developer pays our referral commission directly.",
+      "New construction: Zero advisory fee to buyer. Developer pays our referral commission directly.",
       "Rentals: One month's rent for leases up to 12 months. Two months for longer terms.",
       "Resale properties: Negotiated case by case. Disclosed before engagement.",
     ],
