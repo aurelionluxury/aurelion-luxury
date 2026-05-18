@@ -7,9 +7,10 @@ const gold = "#D4AF37";
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: { q?: string };
+  searchParams: Promise<{ q?: string }>;
 }) {
-  const q = searchParams.q?.trim() || "";
+  const params = await searchParams;
+  const q = params.q?.trim() || "";
 
   const [properties, vehicles, posts, faqs] = q.length >= 2
     ? await Promise.all([
