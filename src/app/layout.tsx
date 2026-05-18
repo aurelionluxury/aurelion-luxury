@@ -21,23 +21,23 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Aurelion Luxury — Mumbai's Premium Concierge Brokerage",
+    default: "Aurelion Luxury — Mumbai's Premier Luxury Advisory",
     template: "%s | Aurelion Luxury",
   },
   description:
-    "Mumbai's premier luxury concierge brokerage. Curated real estate, exotic automobiles, and IRDAI-certified financial services. Zero cost to clients.",
+    "Mumbai's premier luxury advisory. Curated real estate, exotic automobiles, and IRDAI-certified financial services. Zero cost to clients.",
   keywords: [
     "luxury real estate Mumbai",
     "luxury cars Mumbai",
     "home loans Mumbai",
     "IRDAI certified insurance Mumbai",
-    "luxury brokerage India",
+    "luxury advisory India",
     "Aurelion Luxury",
   ],
   openGraph: {
-    title: "Aurelion Luxury — Mumbai's Premium Concierge Brokerage",
+    title: "Aurelion Luxury — Mumbai's Premier Luxury Advisory",
     description:
-      "Curated real estate, exotic automobiles, and IRDAI-certified financial services in Mumbai. Zero brokerage for clients.",
+      "Curated real estate, exotic automobiles, and IRDAI-certified financial services in Mumbai. Zero advisory fee for clients.",
     type: "website",
     locale: "en_IN",
   },

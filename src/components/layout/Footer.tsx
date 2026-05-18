@@ -19,7 +19,7 @@ export default function Footer() {
               <p style={{ fontSize: 9, letterSpacing: "0.3em", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", marginTop: 2 }}>Luxury</p>
             </div>
             <p style={{ fontSize: 13, color: "rgba(255,255,255,0.38)", lineHeight: 1.7, marginBottom: 16 }}>
-              Mumbai&apos;s premier luxury concierge brokerage. Zero brokerage for clients.
+              Mumbai&apos;s premier luxury advisory. Zero advisory fee for clients.
             </p>
             <p style={{ fontSize: 11, letterSpacing: "0.1em", color: "#D4AF37", marginBottom: 16, opacity: 0.8 }}>
               Mumbai &nbsp;·&nbsp; <span style={{ color: "rgba(255,255,255,0.3)" }}>Coming Soon: Pune · Dubai</span>
@@ -71,7 +71,7 @@ export default function Footer() {
           <div>
             <h4 style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "#D4AF37", marginBottom: 16, fontWeight: 400, opacity: 0.85 }}>Company</h4>
             <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 10, marginBottom: 24 }}>
-              {[["About Us","/about"],["Our Team","/team"],["Brokerage Model","/brokerage"],["NRI Buyers Guide","/nri-guide"],["Blog & Insights","/blog"],["FAQ","/faq"],["Contact","/contact"]].map(([l,h]) => (
+              {[["About Us","/about"],["Our Team","/team"],["Advisory Model","/brokerage"],["NRI Buyers Guide","/nri-guide"],["Blog & Insights","/blog"],["FAQ","/faq"],["Contact","/contact"]].map(([l,h]) => (
                 <li key={l}><Link href={h} style={{ fontSize: 13, color: "rgba(255,255,255,0.38)", textDecoration: "none", transition: "color 0.2s" }}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#D4AF37"; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.38)"; }}>{l}</Link></li>
