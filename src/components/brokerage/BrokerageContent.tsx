@@ -244,18 +244,18 @@ function AccordionItem({ q, a }: { q: string; a: string }) {
 }
 
 /* ─── main component ─────────────────────────────── */
-export default function advisory feeContent() {
+export default function BrokerageContent() {
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=DM+Sans:wght@300;400&display=swap');
 
-        .advisory fee-fee-grid {
+        .brokerage-fee-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 24px;
         }
-        .advisory fee-diagram {
+        .brokerage-diagram {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -263,14 +263,14 @@ export default function advisory feeContent() {
           flex-wrap: wrap;
         }
         @media (max-width: 900px) {
-          .advisory fee-fee-grid {
+          .brokerage-fee-grid {
             grid-template-columns: 1fr;
           }
-          .advisory fee-diagram {
+          .brokerage-diagram {
             flex-direction: column;
             gap: 0;
           }
-          .advisory fee-arrow {
+          .brokerage-arrow {
             transform: rotate(90deg);
           }
         }
@@ -341,7 +341,7 @@ export default function advisory feeContent() {
 
           <FadeUp delay={0.15}>
             {/* diagram */}
-            <div className="advisory fee-diagram" style={{ marginBottom: 52 }}>
+            <div className="brokerage-diagram" style={{ marginBottom: 52 }}>
               {/* Circle 1 */}
               <div
                 style={{
@@ -376,7 +376,7 @@ export default function advisory feeContent() {
 
               {/* Arrow 1 */}
               <div
-                className="advisory fee-arrow"
+                className="brokerage-arrow"
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -455,7 +455,7 @@ export default function advisory feeContent() {
 
               {/* Arrow 2 */}
               <div
-                className="advisory fee-arrow"
+                className="brokerage-arrow"
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -596,7 +596,7 @@ export default function advisory feeContent() {
             </h2>
           </FadeUp>
 
-          <div className="advisory fee-fee-grid">
+          <div className="brokerage-fee-grid">
             {feeCards.map((card, i) => (
               <FadeUp key={i} delay={0.1 + i * 0.12}>
                 <div style={{ ...glassCard, height: "100%" }}>
