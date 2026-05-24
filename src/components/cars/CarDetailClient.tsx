@@ -63,7 +63,18 @@ function CarSVG({ size = 80 }: { size?: number }) {
     </svg>
   );
 }
-
+function getFirstImage(raw: string | null): string | null {
+  if (!raw) return null;
+  const s = raw.trim();
+  if (!s) return null;
+  try {
+    const arr = JSON.parse(s);
+    if (Array.isArray(arr) && arr.length > 0) return String(arr[0]).trim() || null;
+    if (typeof arr === "string" && arr.trim()) return arr.trim();
+  } catch { /* not JSON */ }
+  const first = s.split(",")[0]?.trim();
+  return first || null;
+}
 function parseFeatures(raw: string | null): string[] {
   if (!raw) return [];
   try {
@@ -395,9 +406,14 @@ export default function CarDetailClient({ vehicle, similar }: Props) {
             alignItems: "center",
             justifyContent: "center",
             position: "relative",
+            overflow: "hidden",
           }}
         >
-          <CarSVG size={80} />
+          {getFirstImage(vehicle.images) ? (
+            <img src={getFirstImage(vehicle.images)!} alt={vehicle.title} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} />
+          ) : (
+            <CarSVG size={80} />
+          )}
 
           {/* Condition badge */}
           <span
