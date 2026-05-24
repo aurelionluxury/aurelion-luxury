@@ -288,11 +288,12 @@ function FilterBar({
           <option value="">All Makes</option>
           <option value="Mercedes-Benz">Mercedes-Benz</option>
           <option value="BMW">BMW</option>
+          <option value="Volvo">Volvo</option>
+          <option value="Land Rover">Land Rover</option>
+          <option value="BYD">BYD</option>
+          <option value="Tesla">Tesla</option>
           <option value="Audi">Audi</option>
           <option value="Porsche">Porsche</option>
-          <option value="Range Rover">Range Rover</option>
-          <option value="Lamborghini">Lamborghini</option>
-          <option value="Ferrari">Ferrari</option>
         </select>
 
         <select
@@ -314,8 +315,8 @@ function FilterBar({
           onChange={(e) => onFilter("condition", e.target.value)}
         >
           <option value="">All Conditions</option>
-          <option value="New">New</option>
-          <option value="Pre-Owned">Pre-Owned</option>
+          <option value="new">New</option>
+          <option value="pre-owned">Pre-Owned</option>
         </select>
 
         <select
