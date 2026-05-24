@@ -19,15 +19,15 @@ type SP = Promise<{
 export default async function CarsPage({ searchParams }: { searchParams: SP }) {
   const params = await searchParams;
 
-  const baseWhere = {
+  const baseWhere: any = {
     status: "available",
-    ...(params.make ? { make: { equals: params.make, mode: "insensitive" as const } } : {}),
-    ...(params.bodyType ? { type: { equals: params.bodyType, mode: "insensitive" as const } } : {}),
-    ...(params.condition ? { condition: { equals: params.condition, mode: "insensitive" as const } } : {}),
-    ...(params.budget === "below-50" ? { price: { lte: 5000000 } } : {}),
-    ...(params.budget === "50-100" ? { price: { gte: 5000000, lte: 10000000 } } : {}),
-    ...(params.budget === "1-3cr" ? { price: { gte: 10000000, lte: 30000000 } } : {}),
-    ...(params.budget === "3cr-plus" ? { price: { gte: 30000000 } } : {}),
+    ...(params.make ? { make: params.make } : {}),
+    ...(params.bodyType ? { type: params.bodyType } : {}),
+    ...(params.condition ? { condition: params.condition } : {}),
+    ...(params.budget === "below-50" ? { price: { lte: 0.5 } } : {}),
+    ...(params.budget === "50-100" ? { price: { gte: 0.5, lte: 1 } } : {}),
+    ...(params.budget === "1-3cr" ? { price: { gte: 1, lte: 3 } } : {}),
+    ...(params.budget === "3cr-plus" ? { price: { gte: 3 } } : {}),
   };
 
   const [vehicles, total] = await Promise.all([
