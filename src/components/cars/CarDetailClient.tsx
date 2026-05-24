@@ -180,6 +180,7 @@ function InquiryCard({ vehicle }: { vehicle: Vehicle }) {
       </div>
       <div
         style={{
+
           fontSize: 10,
           letterSpacing: "0.12em",
           textTransform: "uppercase",
@@ -188,7 +189,7 @@ function InquiryCard({ vehicle }: { vehicle: Vehicle }) {
           marginBottom: 24,
         }}
       >
-        Asking Price
+        {vehicle.condition === "new" ? "Ex-Showroom Price · Mumbai" : "Asking Price"}
       </div>
 
       <div
