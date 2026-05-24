@@ -302,11 +302,10 @@ function FilterBar({
           onChange={(e) => onFilter("bodyType", e.target.value)}
         >
           <option value="">All Body Types</option>
-          <option value="SUV">SUV</option>
-          <option value="Sedan">Sedan</option>
-          <option value="Sports">Sports</option>
-          <option value="Coupe">Coupe</option>
-          <option value="Convertible">Convertible</option>
+          <option value="suv">SUV</option>
+          <option value="sedan">Sedan</option>
+          <option value="coupe">Coupe</option>
+          <option value="convertible">Convertible</option>
         </select>
 
         <select
@@ -316,7 +315,8 @@ function FilterBar({
         >
           <option value="">All Conditions</option>
           <option value="new">New</option>
-          <option value="pre-owned">Pre-Owned</option>
+          <option value="pre_owned">Pre-Owned</option>
+          <option value="certified">Certified Pre-Owned</option>
         </select>
 
         <select

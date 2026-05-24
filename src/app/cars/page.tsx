@@ -20,8 +20,8 @@ export default async function CarsPage({ searchParams }: { searchParams: SP }) {
   const params = await searchParams;
   const where: Record<string, unknown> = { status: "available" };
   if (params.make) where.make = params.make;
-  if (params.bodyType) where.type = params.bodyType;
-  if (params.condition) where.condition = params.condition;
+  if (params.bodyType) where.type = { equals: params.bodyType, mode: "insensitive" };
+  if (params.condition) where.condition = { equals: params.condition, mode: "insensitive" };
 
   const vehicles = await prisma.vehicle.findMany({
     where,
