@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Last Safe Harbour | Aurelion Luxury</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-dim: #8a6e30;
+      --dark: #0A0A0A;
+      --dark-2: #111111;
+      --dark-3: #1A1A1A;
+      --dark-4: #222222;
+      --white: #F5F0E8;
+      --white-dim: #C8BFA8;
+      --accent-red: #8B1A1A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--dark);
+      color: var(--white);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      line-height: 1.9;
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE TEXTURE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 6vw 8vh;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(139,26,26,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 20% 80%, rgba(201,168,76,0.10) 0%, transparent 55%),
+        linear-gradient(170deg, #0c0c0c 0%, #1a1008 60%, #0A0A0A 100%);
+      z-index: 0;
+    }
+
+    .hero-lines {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .hero-lines::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(to bottom, transparent, var(--dark));
+    }
+
+    /* Animated globe grid */
+    .globe-art {
+      position: absolute;
+      top: 50%;
+      right: -5%;
+      transform: translateY(-50%);
+      width: 55vw;
+      max-width: 700px;
+      opacity: 0.08;
+      animation: slowRotate 60s linear infinite;
+    }
+
+    @keyframes slowRotate {
+      from { transform: translateY(-50%) rotate(0deg); }
+      to   { transform: translateY(-50%) rotate(360deg); }
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 780px; }
+
+    .brand-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      animation: fadeUp 1s ease both;
+    }
+    .brand-tag::before {
+      content: '';
+      width: 3rem;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: 0.01em;
+      color: var(--white);
+      animation: fadeUp 1s 0.2s ease both;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--white-dim);
+      max-width: 520px;
+      letter-spacing: 0.04em;
+      animation: fadeUp 1s 0.4s ease both;
+    }
+
+    .hero-meta {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 2.5rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      animation: fadeUp 1s 0.6s ease both;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 3rem;
+      right: 6vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      z-index: 2;
+      animation: fadeUp 1s 1s ease both;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 4rem;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollDrop 2s ease-in-out infinite;
+    }
+    @keyframes scrollDrop {
+      0%, 100% { transform: scaleY(1); opacity: 1; }
+      50% { transform: scaleY(0.4); opacity: 0.4; }
+    }
+
+    /* ─── GOLD DIVIDER ─── */
+    .gold-divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin: 0 0 3rem;
+    }
+    .gold-divider span {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .gold-divider::before,
+    .gold-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+    }
+
+    /* ─── ARTICLE BODY ─── */
+    .article-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 8vh 6vw;
+    }
+
+    .intro-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--gold-light);
+      border-left: 2px solid var(--gold);
+      padding: 1.5rem 2rem;
+      margin: 0 0 4rem;
+      background: linear-gradient(90deg, rgba(201,168,76,0.06), transparent);
+    }
+
+    .body-text {
+      font-size: 1.05rem;
+      line-height: 2;
+      color: var(--white-dim);
+      margin-bottom: 1.8rem;
+    }
+
+    .body-text strong {
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    /* ─── SECTION HEADERS ─── */
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--white);
+      margin-bottom: 2rem;
+    }
+
+    .section-title em { font-style: italic; color: var(--gold-light); }
+
+    /* ─── ASSET COMPARISON CARDS ─── */
+    .asset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5px;
+      margin: 3rem 0 4rem;
+      border: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .asset-card {
+      background: var(--dark-3);
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s ease;
+    }
+
+    .asset-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-red), transparent);
+      opacity: 0.6;
+    }
+
+    .asset-card.highlight { background: var(--dark-4); }
+    .asset-card.highlight::before {
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 1;
+    }
+
+    .asset-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .asset-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .asset-verdict {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--accent-red);
+      margin-bottom: 1rem;
+    }
+
+    .asset-card.highlight .asset-verdict { color: var(--gold-light); }
+
+    .asset-desc {
+      font-size: 0.9rem;
+      color: var(--white-dim);
+      line-height: 1.8;
+    }
+
+    .asset-tag {
+      display: inline-block;
+      margin-top: 1.2rem;
+      padding: 0.3rem 0.9rem;
+      border: 1px solid var(--accent-red);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--accent-red);
+      text-transform: uppercase;
+    }
+
+    .asset-card.highlight .asset-tag {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ─── PILLARS SECTION ─── */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .pillar {
+      padding: 2rem;
+      border: 1px solid rgba(201,168,76,0.12);
+      background: linear-gradient(135deg, rgba(201,168,76,0.03), transparent);
+      position: relative;
+    }
+
+    .pillar-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: rgba(201,168,76,0.15);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .pillar-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .pillar-text {
+      font-size: 0.9rem;
+      color: var(--white-dim);
+      line-height: 1.8;
+    }
+
+    /* ─── PULL QUOTE ─── */
+    .pull-quote {
+      text-align: center;
+      padding: 5rem 2rem;
+      position: relative;
+      margin: 4rem 0;
+    }
+
+    .pull-quote::before,
+    .pull-quote::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 1px;
+      background: var(--gold-dim);
+    }
+    .pull-quote::before { top: 2rem; }
+    .pull-quote::after  { bottom: 2rem; }
+
+    .pull-quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.4;
+      max-width: 640px;
+      margin: 0 auto 1.2rem;
+    }
+
+    .pull-quote-attr {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    /* ─── DATA TABLE ─── */
+    .crisis-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 3rem 0;
+      font-size: 0.9rem;
+    }
+
+    .crisis-table th {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid rgba(201,168,76,0.3);
+      text-align: left;
+    }
+
+    .crisis-table td {
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: var(--white-dim);
+      vertical-align: top;
+    }
+
+    .crisis-table tr:hover td { background: rgba(201,168,76,0.03); }
+
+    .crisis-table .winner { color: var(--gold-light); font-weight: 700; }
+    .crisis-table .loser  { color: #8B1A1A; }
+    .crisis-table .mixed  { color: #888; }
+
+    /* ─── CTA / FOOTER ─── */
+    .cta-strip {
+      background: linear-gradient(135deg, #111108 0%, #1a1505 50%, #0f0d04 100%);
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 4rem 3rem;
+      margin: 5rem 0 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-strip::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(201,168,76,0.06), transparent);
+    }
+
+    .cta-strip h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .cta-strip p {
+      font-size: 0.95rem;
+      color: var(--white-dim);
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      position: relative;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 1rem 3rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      cursor: pointer;
+      background: transparent;
+    }
+
+    .cta-btn:hover {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    .article-footer {
+      padding: 3rem 6vw;
+      border-top: 1px solid rgba(201,168,76,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-brand {
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 640px) {
+      .hero { padding: 0 5vw 8vh; }
+      .article-wrap { padding: 6vh 5vw; }
+      .asset-grid { grid-template-columns: 1fr; }
+      .crisis-table { font-size: 0.78rem; }
+      .crisis-table th, .crisis-table td { padding: 0.8rem 0.6rem; }
+      .cta-strip { padding: 3rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+
+    <!-- Decorative SVG globe -->
+    <svg class="globe-art" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="200" cy="200" r="180" stroke="#C9A84C" stroke-width="0.8"/>
+      <ellipse cx="200" cy="200" rx="90" ry="180" stroke="#C9A84C" stroke-width="0.6"/>
+      <ellipse cx="200" cy="200" rx="150" ry="180" stroke="#C9A84C" stroke-width="0.4"/>
+      <line x1="20" y1="200" x2="380" y2="200" stroke="#C9A84C" stroke-width="0.6"/>
+      <line x1="200" y1="20" x2="200" y2="380" stroke="#C9A84C" stroke-width="0.6"/>
+      <ellipse cx="200" cy="200" rx="180" ry="60" stroke="#C9A84C" stroke-width="0.4"/>
+      <ellipse cx="200" cy="200" rx="180" ry="110" stroke="#C9A84C" stroke-width="0.3"/>
+      <circle cx="200" cy="200" r="10" fill="#C9A84C" opacity="0.4"/>
+      <circle cx="200" cy="200" r="4"  fill="#C9A84C" opacity="0.8"/>
+    </svg>
+
+    <div class="hero-content">
+      <div class="brand-tag">Aurelion Luxury &nbsp;·&nbsp; Investment Intelligence</div>
+      <h1>When the World <em>Trembles,</em><br/>Land Still Stands.</h1>
+      <p class="hero-sub">
+        A strategic examination of why real estate endures — and outperforms — when oil spills, markets crash, and gold loses its lustre in a world at war.
+      </p>
+      <div class="hero-meta">
+        <span>By Aurelion Luxury Advisory</span>
+        <span>·</span>
+        <span>Luxury Real Estate · Mumbai</span>
+        <span>·</span>
+        <span>8 Min Read</span>
+      </div>
+    </div>
+
+    <div class="scroll-cue">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════ ARTICLE BODY ═══════════════ -->
+  <main class="article-wrap">
+
+    <blockquote class="intro-quote reveal">
+      "In every era of civilisational upheaval — from the Roman collapse to two World Wars to Cold War brinkmanship — one truth has held constant: those who owned land, owned the future."
+    </blockquote>
+
+    <div class="gold-divider reveal"><span>The Premise</span></div>
+
+    <p class="body-text reveal">
+      The world in 2025 is navigating a confluence of geopolitical tensions unseen since the mid-twentieth century. Regional conflicts, shifting alliances, energy warfare, and sanctions regimes are no longer hypothetical scenarios — they are live market forces. In this climate, sophisticated investors and high-net-worth families are asking a question that cuts through all financial noise: <strong>Where do I park my capital when the world itself becomes unstable?</strong>
+    </p>
+
+    <p class="body-text reveal">
+      The traditional answers — oil, equities, gold — all carry seductive logic. But when scrutinised through the lens of actual wartime and geopolitical crisis performance, each reveals critical vulnerabilities. Real estate, on the other hand, tells a different story: one of permanence, utility, and the irreplaceable human need for shelter and territory.
+    </p>
+
+    <p class="body-text reveal">
+      At <strong>Aurelion Luxury</strong>, we have built our entire advisory practice on one principle: capital preservation first, appreciation second. This article is not a sales pitch. It is an honest, evidence-grounded examination of why premium real estate — particularly in resilient urban centres like Mumbai — represents the most defensible store of wealth in a world war scenario.
+    </p>
+
+    <!-- SECTION: COMPARISON TABLE -->
+    <div style="margin: 5rem 0 3rem;" class="reveal">
+      <div class="section-label">Crisis Performance Analysis</div>
+      <h2 class="section-title">Four Assets. <em>One World War.</em><br/>Who Survives?</h2>
+    </div>
+
+    <table class="crisis-table reveal">
+      <thead>
+        <tr>
+          <th>Asset Class</th>
+          <th>Wartime Behaviour</th>
+          <th>Key Risk</th>
+          <th>Verdict</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--white);">🛢 Crude Oil</strong></td>
+          <td>Volatile spikes followed by catastrophic crashes. Supply chains weaponised.</td>
+          <td>State seizure, sanctions, infrastructure destruction</td>
+          <td class="loser">High Risk</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--white);">📈 Equities</strong></td>
+          <td>Markets collapse at war declaration. Exchanges close. Hyperinflation destroys value.</td>
+          <td>Currency failure, exchange closures, corporate collapse</td>
+          <td class="loser">Extreme Risk</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--white);">🥇 Gold</strong></td>
+          <td>Initial safe-haven surge. But confiscated by states in total war (US 1933, WW2 examples).</td>
+          <td>Confiscation, illiquidity, no yield</td>
+          <td class="mixed">Moderate Risk</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--gold-light);">🏛 Prime Real Estate</strong></td>
+          <td>Retains intrinsic value. Rental income continues. Tangible — cannot be deleted.</td>
+          <td>Location-specific risk (mitigated in stable geographies)</td>
+          <td class="winner">Lowest Risk</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- SECTION: OIL -->
+    <div style="margin: 5rem 0 2rem;" class="reveal">
+      <div class="section-label">Asset Autopsy — I</div>
+      <h2 class="section-title">Oil: <em>The Mirage</em> of Strategic Value</h2>
+    </div>
+
+    <p class="body-text reveal">
+      Oil is the lifeblood of industrial warfare — and precisely because of this, it becomes the first casualty of geopolitical conflict. When war erupts, oil infrastructure becomes a prime military target. Pipelines are bombed. Refineries are seized. Shipping lanes are blockaded. The Strait of Hormuz, through which nearly a fifth of the world's oil supply passes, transforms from a trade corridor into a strategic chokepoint overnight.
+    </p>
+
+    <p class="body-text reveal">
+      For the individual investor, exposure to oil in a world war scenario carries compounding dangers: price volatility that can swing 80% within weeks, potential nationalisation of energy assets by state actors, and the complete collapse of settlement mechanisms when global financial infrastructure fractures. The 1973 Arab Oil Embargo, the Gulf War's market disruptions, and Russia's weaponisation of gas supply post-2022 all illustrate one irrefutable truth — <strong>oil is a geopolitical weapon, not a safe investment harbour.</strong>
+    </p>
+
+    <p class="body-text reveal">
+      Furthermore, the accelerating global pivot to renewable energy means that oil's long-term investment thesis is being structurally dismantled. In a world war, you may see a temporary spike — but the aftermath, including sanctions, market restructuring, and the green transition, makes oil a speculator's game, not a wealth preserver's choice.
+    </p>
+
+    <!-- SECTION: STOCKS -->
+    <div style="margin: 5rem 0 2rem;" class="reveal">
+      <div class="section-label">Asset Autopsy — II</div>
+      <h2 class="section-title">Stocks: Paper Wealth on <em>a Burning Map</em></h2>
+    </div>
+
+    <p class="body-text reveal">
+      The relationship between war and equity markets is historically unambiguous: announcements of major conflict trigger immediate, severe market crashes. When Germany invaded Poland in September 1939, the London Stock Exchange suspended trading for weeks. When the United States entered World War II after Pearl Harbour, the Dow Jones saw catastrophic sessions. In more recent memory, global equities shed trillions in hours when Russia invaded Ukraine in 2022.
+    </p>
+
+    <p class="body-text reveal">
+      But beyond the initial crash lies a more insidious threat: <strong>currency debasement and hyperinflation</strong>. Wars are financed by printing money. Weimar Germany's hyperinflation of 1923, which emerged directly from war debt monetisation, rendered stock portfolios worthless in real terms even as nominal values soared. When the unit of account itself collapses, equity ownership becomes a mathematical illusion.
+    </p>
+
+    <p class="body-text reveal">
+      Additionally, multinational corporations — the backbone of major indices — face existential risks in total war: supply chain destruction, forced nationalisation, sanctions cutting off revenue streams, and key personnel losses. Stocks are, at their core, claims on future corporate earnings. In a world at war, that future becomes profoundly uncertain.
+    </p>
+
+    <div class="pull-quote reveal">
+      <p class="pull-quote-text">"Equities are a promise about tomorrow. Real estate is a fact about today. In wartime, the market trades in promises. Landowners deal in facts."</p>
+      <p class="pull-quote-attr">Aurelion Luxury Advisory Perspective</p>
+    </div>
+
+    <!-- SECTION: GOLD -->
+    <div style="margin: 5rem 0 2rem;" class="reveal">
+      <div class="section-label">Asset Autopsy — III</div>
+      <h2 class="section-title">Gold: The Ancient Safe Haven <em>with Modern Flaws</em></h2>
+    </div>
+
+    <p class="body-text reveal">
+      Gold's reputation as the ultimate crisis asset is one of history's most enduring narratives — and it contains genuine merit. Gold is stateless, globally recognised, and has maintained purchasing power across five thousand years of human civilisation. In the early phase of geopolitical escalation, institutional investors pile into gold, prices surge, and the metal fulfils its safe-haven promise.
+    </p>
+
+    <p class="body-text reveal">
+      But history reveals gold's darker wartime chapter. In 1933, the United States government issued Executive Order 6102, <strong>making it illegal for American citizens to own gold bullion</strong>, forcing confiscation at fixed prices well below market rates. Similar confiscations occurred across Europe during World War II. Governments at war require total resource mobilisation — and gold in private hands represents a reserve they will claim.
+    </p>
+
+    <p class="body-text reveal">
+      Beyond confiscation risk, physical gold generates zero income, requires secure (costly) storage, and faces severe liquidity constraints in a full-scale conflict when physical movement of assets becomes dangerous or impossible. Gold ETFs and digital gold carry counterparty risk — when the financial system itself is under siege, the intermediary holding your gold may cease to function. <strong>Gold is better than nothing; it is not better than land.</strong>
+    </p>
+
+    <!-- SECTION: WHY REAL ESTATE -->
+    <div style="margin: 5rem 0 2rem;" class="reveal">
+      <div class="section-label">The Case for Real Estate</div>
+      <h2 class="section-title">Land: The Asset <em>Even War Cannot Destroy</em></h2>
+    </div>
+
+    <p class="body-text reveal">
+      Real estate's fundamental advantage in any crisis scenario derives from a single irreducible fact: <strong>land is finite, immovable, and universally needed</strong>. Unlike oil reserves that can be bombed, stock certificates that can become worthless, or gold that can be confiscated, real property in stable geographies retains both physical and economic substance.
+    </p>
+
+    <p class="body-text reveal">
+      Consider the trajectory of prime real estate in major conflict-adjacent economies. India, positioned as a geopolitical swing state and economic growth engine, witnessed residential property values in Mumbai's premium corridors continue appreciating through the post-9/11 crisis, the 2008 financial collapse, the COVID pandemic, and ongoing Russia-Ukraine market shocks. <strong>The Worli skyline did not care about geopolitical headlines.</strong>
+    </p>
+
+    <!-- PILLARS -->
+    <div class="pillars reveal">
+      <div class="pillar">
+        <div class="pillar-num">01</div>
+        <div class="pillar-title">Intrinsic Utility</div>
+        <p class="pillar-text">People always need shelter. In conflict, population displacement actually creates surging demand for housing in safe zones — driving rents and values upward in stable cities.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">02</div>
+        <div class="pillar-title">Inflation Hedge</div>
+        <p class="pillar-text">War triggers inflation. Real assets — land, buildings — appreciate in nominal terms as currency depreciates. Your property rises with inflation; your savings account is consumed by it.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">03</div>
+        <div class="pillar-title">Income Generation</div>
+        <p class="pillar-text">Unlike gold or oil futures, rental real estate generates monthly cash flow even through crises. Luxury residential and commercial leases in tier-one cities sustain income through disruption.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">04</div>
+        <div class="pillar-title">Leverage Advantage</div>
+        <p class="pillar-text">Real estate allows you to control a ₹5 Crore asset with ₹1.5 Crore equity. No other safe-haven asset permits this structural amplification of wealth in a rising-value environment.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">05</div>
+        <div class="pillar-title">State-Backed Rights</div>
+        <p class="pillar-text">Property rights are codified in constitutional law. Unlike gold (confiscable) or equities (tradeable paper), land ownership is a legal entitlement that survives all but total state collapse.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">06</div>
+        <div class="pillar-title">Non-Correlation</div>
+        <p class="pillar-text">Premium real estate in cities like Mumbai shows near-zero correlation with global equity markets. When Sensex crashes 30%, your Worli apartment does not follow it down.</p>
+      </div>
+    </div>
+
+    <!-- SECTION: FOUR ASSET CARDS -->
+    <div style="margin: 5rem 0 2rem;" class="reveal">
+      <div class="section-label">Investment Verdict</div>
+      <h2 class="section-title">The World War <em>Investment Hierarchy</em></h2>
+    </div>
+
+    <div class="asset-grid reveal">
+      <div class="asset-card">
+        <span class="asset-icon">🛢</span>
+        <div class="asset-name">Crude Oil</div>
+        <div class="asset-verdict">Weaponised & Volatile</div>
+        <p class="asset-desc">First targeted in war. Subject to sanctions, seizure, and market manipulation by state actors. Price swings destroy returns before you can exit positions.</p>
+        <span class="asset-tag">Avoid in Crisis</span>
+      </div>
+      <div class="asset-card">
+        <span class="asset-icon">📈</span>
+        <div class="asset-name">Global Equities</div>
+        <div class="asset-verdict">Paper in a Firestorm</div>
+        <p class="asset-desc">Markets close at war onset. Inflation devours real returns. Corporate fundamentals become irrelevant when supply chains and economies are restructured by force.</p>
+        <span class="asset-tag">Extreme Caution</span>
+      </div>
+      <div class="asset-card">
+        <span class="asset-icon">🥇</span>
+        <div class="asset-name">Physical Gold</div>
+        <div class="asset-verdict">Noble, But Vulnerable</div>
+        <p class="asset-desc">Historical confiscation precedent. Zero income yield. Storage risk. Illiquid in active conflict zones. A partial hedge — not a complete strategy.</p>
+        <span class="asset-tag">Limited Allocation</span>
+      </div>
+      <div class="asset-card highlight">
+        <span class="asset-icon">🏛</span>
+        <div class="asset-name">Prime Real Estate</div>
+        <div class="asset-verdict">The Last Safe Harbour</div>
+        <p class="asset-desc">Immovable. Income-generating. Inflation-linked. Constitutional protection. In stable geographies, real estate has never permanently lost value across any recorded conflict in history.</p>
+        <span class="asset-tag">Strategic Core Holding</span>
+      </div>
+    </div>
+
+    <!-- SECTION: INDIA / MUMBAI ANGLE -->
+    <div style="margin: 5rem 0 2rem;" class="reveal">
+      <div class="section-label">The Mumbai Advantage</div>
+      <h2 class="section-title">Why India's Financial Capital<br/>Is <em>The Geopolitical Safe Zone</em></h2>
+    </div>
+
+    <p class="body-text reveal">
+      India's strategic positioning in a world war scenario is uniquely favourable. As the world's largest democracy, a nuclear power, and a nation with deep diplomatic relationships across both the Western and Eastern blocs, India is unlikely to be a theatre of direct conflict in any foreseeable geopolitical escalation. This non-alignment heritage, now reframed as "strategic autonomy," insulates Indian assets from the direct destruction risk that confronts European, Middle Eastern, or East Asian property.
+    </p>
+
+    <p class="body-text reveal">
+      Mumbai specifically — as India's financial capital, home to SEBI, BSE, the Reserve Bank of India, and the headquarters of virtually every major Indian and multinational corporation — represents a city whose economic relevance transcends any single geopolitical cycle. <strong>The Worli-Bandra corridor, South Mumbai's heritage precincts, and the emerging luxury nodes of the Western Suburbs are not merely real estate locations. They are positions within one of the world's most resilient economic ecosystems.</strong>
+    </p>
+
+    <p class="body-text reveal">
+      Furthermore, India's demographic dividend — a young, urbanising, income-rising population of 1.4 billion — generates structural demand for premium housing that operates entirely independently of global war cycles. Even as capitals in Europe or the Middle East face existential uncertainty, Mumbai's luxury residential absorption has maintained positive momentum across every major global crisis of the past three decades.
+    </p>
+
+    <!-- SECTION: CLOSING PHILOSOPHY -->
+    <div style="margin: 5rem 0 2rem;" class="reveal">
+      <div class="section-label">The Aurelion Philosophy</div>
+      <h2 class="section-title">Wealth That <em>Outlives History</em></h2>
+    </div>
+
+    <p class="body-text reveal">
+      The HNI families who have preserved and grown their wealth across generations — across wars, partitions, market crashes, and civilisational disruptions — have one common denominator: they owned land. Not oil futures contracts. Not brokerage accounts filled with equities. Not even gold bars, which governments have demonstrated a willingness to seize. They owned physical, registered, legally documented land in cities that mattered.
+    </p>
+
+    <p class="body-text reveal">
+      At Aurelion Luxury, our advisory framework is built on a fiduciary standard: we recommend what preserves and grows your capital, not what generates the largest commission. Our curated portfolio of luxury residential and commercial properties — spanning Churchgate to Borivali, Worli to Bandra West — represents precisely the kind of tangible, income-generating, inflation-resistant wealth vehicles that outperform in any macro environment.
+    </p>
+
+    <p class="body-text reveal">
+      <strong>In a world of escalating uncertainty, the wisest thing you can do with capital is anchor it to something that cannot be wiped from a server, cannot be confiscated at a border, and cannot be printed into worthlessness by a central bank.</strong> In a world war scenario — or indeed in any market dislocation — real estate in a stable, growing city is not just an investment. It is a declaration of permanence.
+    </p>
+
+    <div class="pull-quote reveal">
+      <p class="pull-quote-text">"They can crash markets. They can sanction currencies. They can seize gold. But they cannot move your building."</p>
+      <p class="pull-quote-attr">Aurelion Luxury — Mumbai</p>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-strip reveal">
+      <h3>Ready to Anchor Your Wealth<br/>in What Lasts?</h3>
+      <p>Speak with an Aurelion Luxury advisor. We serve HNI and UHNI clients across Mumbai and Pune with transparency, discretion, and a fiduciary commitment to your capital.</p>
+      <a href="#" class="cta-btn">Request a Private Consultation</a>
+    </div>
+
+  </main>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="article-footer">
+    <div class="footer-brand">Aurelion Luxury</div>
+    <div class="footer-copy">© 2025 Aurelion Luxury · Mumbai · All Rights Reserved · MahaRERA Certified</div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
