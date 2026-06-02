@@ -126,6 +126,7 @@ function NewProjectCard({ project, index }: { project: NewProject; index: number
         transition: "border-color 0.3s, box-shadow 0.3s",
         cursor: "pointer",
       }}
+      onClick={() => window.location.href = `/real-estate/${project.slug}`}
       whileHover={{ borderColor: "rgba(212,175,55,0.2)", boxShadow: "0 8px 32px rgba(212,175,55,0.06)", y: -3 }}
     >
       {/* Top row: status + featured */}
@@ -223,7 +224,7 @@ function PropertyCard({ property, index }: { property: Property; index: number }
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay: index * 0.1 }}
-      style={{
+            style={{
         background: "linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))",
         border: "1px solid rgba(255,255,255,0.06)",
         borderRadius: 12,
@@ -232,6 +233,7 @@ function PropertyCard({ property, index }: { property: Property; index: number }
         cursor: "pointer",
         transition: "transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease",
       }}
+      onClick={() => window.location.href = `/real-estate/${property.slug}`}
       whileHover={{
         y: -4,
         borderColor: "rgba(212,175,55,0.3)",
