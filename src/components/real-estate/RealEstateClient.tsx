@@ -225,7 +225,7 @@ function PropertyCard({ property, index }: { property: Property; index: number }
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay: index * 0.1 }}
             style={{
-        background: "linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))",
+        background: "linear-gradient(145deg, rsrc/app/admin/settings/page.tsxgba(255,255,255,0.05), rgba(255,255,255,0.02))",
         border: "1px solid rgba(255,255,255,0.06)",
         borderRadius: 12,
         backdropFilter: "blur(20px)",

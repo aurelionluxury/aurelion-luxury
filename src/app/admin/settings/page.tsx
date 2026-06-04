@@ -26,6 +26,9 @@ const SETTING_GROUPS: { label: string; keys: { key: string; label: string; hint?
       { key: "instagram_url", label: "Instagram URL" },
       { key: "linkedin_url", label: "LinkedIn URL" },
       { key: "youtube_url", label: "YouTube URL" },
+      { key: "facebook_url", label: "Facebook URL" },
+      { key: "twitter_url", label: "Twitter / X URL" },
+      { key: "whatsapp_channel_url", label: "WhatsApp Channel URL" },
     ],
   },
   {
