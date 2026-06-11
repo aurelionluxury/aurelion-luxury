@@ -51,7 +51,7 @@ export const metadata: Metadata = {
       "Discover South Mumbai's finest luxury properties — sea-facing apartments, penthouses, and bungalows in Worli, Pedder Road, and Cuffe Parade. Zero advisory fee.",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/logo.jpg",
         width: 1200,
         height: 630,
         alt: "Aurelion Luxury – Premium Real Estate South Mumbai",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Luxury Real Estate South Mumbai | Aurelion Luxury",
     description: "Discover South Mumbai's finest luxury properties.",
-    images: ["/og-image.jpg"],
+    images: ["/logo.jpg"],
   },
   robots: {
     index: true,
@@ -109,6 +109,7 @@ const schemaOrg = {
     { "@type": "Neighborhood", name: "Malabar Hill" },
     { "@type": "Neighborhood", name: "Altamount Road" },
   ],
+   image: "https://www.aurelionluxury.com/logo.jpg",
   priceRange: "₹₹₹₹",
   openingHours: "Mo-Sa 09:00-19:00",
   sameAs: [
