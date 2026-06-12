@@ -16,10 +16,46 @@ export const metadata: Metadata = {
   },
 };
 
+// Strips HTML tags from TipTap rich text before injecting into schema
+function stripHtml(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 export default async function FAQPage() {
   const faqs = await prisma.fAQ.findMany({
     where: { isActive: true },
     orderBy: [{ category: "asc" }, { order: "asc" }],
   });
-  return <FAQClient faqs={faqs} />;
+
+  // Auto-generates schema from every active FAQ in your database
+  // Add new FAQs via your admin panel — schema updates automatically
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: stripHtml(faq.answer),
+      },
+    })),
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <FAQClient faqs={faqs} />
+    </>
+  );
 }
