@@ -1,12 +1,19 @@
-export const dynamic = "force-dynamic";
 import type { Metadata } from "next";
 import prisma from "@/lib/prisma";
 import RealEstateClient from "@/components/real-estate/RealEstateClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
-  title: "Luxury Properties in Mumbai | Aurelion Luxury",
-  description:
-    "Curated luxury residential and commercial properties from South Mumbai to Borivali — personally vetted by Aurelion Luxury.",
+  title: "Luxury Properties South Mumbai | Sea-Facing Flats, Penthouses & Villas",
+  description: "Browse Aurelion Luxury's curated collection of ultra-premium properties in South Mumbai — sea-facing apartments in Worli, penthouses on Pedder Road, and bungalows in Malabar Hill. Zero advisory fee.",
+  keywords: ["luxury properties south mumbai", "sea facing flats mumbai", "worli apartment for sale", "pedder road flat", "cuffe parade luxury apartment", "malabar hill bungalow"],
+  alternates: { canonical: "https://www.aurelionluxury.com/real-estate" },
+  openGraph: {
+    title: "Luxury Properties South Mumbai | Aurelion Luxury",
+    description: "Curated ultra-premium properties in Worli, Pedder Road, Cuffe Parade & Malabar Hill. Zero advisory fee.",
+    url: "https://www.aurelionluxury.com/real-estate",
+  },
 };
 
 type SP = Promise<{

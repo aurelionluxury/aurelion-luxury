@@ -1,12 +1,19 @@
-export const dynamic = "force-dynamic";
 import type { Metadata } from "next";
 import prisma from "@/lib/prisma";
 import BlogListingClient from "@/components/blog/BlogListingClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
-  title: "Insights & Market Intelligence | Aurelion Luxury",
-  description:
-    "Expert insights on Mumbai luxury real estate, automobiles, and wealth management from the Aurelion Luxury team.",
+  title: "Luxury Real Estate Blog | Mumbai Property Insights & Market Updates",
+  description: "Expert insights, market analysis, and buying guides for luxury real estate in Mumbai. Stay updated on South Mumbai property trends, price movements, NRI rules, and investment opportunities.",
+  keywords: ["mumbai luxury real estate blog", "south mumbai property market 2026", "luxury property investment india", "mumbai real estate insights"],
+  alternates: { canonical: "https://www.aurelionluxury.com/blog" },
+  openGraph: {
+    title: "Luxury Real Estate Blog | Aurelion Luxury",
+    description: "Mumbai luxury property insights, market updates, and expert buying guides.",
+    url: "https://www.aurelionluxury.com/blog",
+  },
 };
 
 type SP = Promise<{ category?: string }>;
