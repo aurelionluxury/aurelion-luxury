@@ -6,7 +6,7 @@ import nodemailer from "nodemailer";
 export async function POST(req: Request) {
   try {
     const { email } = await req.json();
-    const admin = await prisma.adminUser.findUnique({ where: { email } });
+    const admin = await prisma.admin.findUnique({ where: { email } });
     if (!admin) {
       return NextResponse.json({ ok: true }); // Don't reveal if email exists
     }
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     const expires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 
     // Save token to DB
-    await prisma.adminUser.update({
+    await prisma.admin.update({
       where: { email },
       data: { resetToken: token, resetTokenExpiry: expires },
     });
