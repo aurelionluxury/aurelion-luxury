@@ -111,7 +111,7 @@ export default function AdminLoginPage() {
               </p>
             )}
             <div className="text-right">
-              <a href="/admin/forgot-password" className="text-[11px] text-[#C9A84C] hover:underline tracking-wide">
+              <a href="/auth/forgot-password" className="text-[11px] text-[#C9A84C] hover:underline tracking-wide">
                 Forgot Password?
               </a>
             </div>
