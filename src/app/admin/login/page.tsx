@@ -110,7 +110,11 @@ export default function AdminLoginPage() {
                 {error}
               </p>
             )}
-
+            <div className="text-right">
+              <a href="/admin/forgot-password" className="text-[11px] text-[#C9A84C] hover:underline tracking-wide">
+                Forgot Password?
+              </a>
+            </div>
             <button
               type="submit"
               disabled={loading}

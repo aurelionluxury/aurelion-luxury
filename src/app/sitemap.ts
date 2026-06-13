@@ -21,6 +21,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: 'https://www.aurelionluxury.com/blog/luxury-real-estate-south-mumbai-guide',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
       url: 'https://www.aurelionluxury.com/faq',
       lastModified: new Date(),
       changeFrequency: 'monthly',
@@ -104,5 +110,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'yearly',
       priority: 0.3,
     },
+    {
+  url: 'https://www.aurelionluxury.com/blog/pre-launch-vs-ready-to-move-luxury-apartments-mumbai',
+  lastModified: new Date(),
+  changeFrequency: 'monthly',
+  priority: 0.9,
+},
   ]
 }
