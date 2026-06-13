@@ -38,7 +38,6 @@ export default function ForgotPasswordPage() {
         <div className="border border-[#C9A84C]/20 bg-[#111111] p-8">
           <h1 style={{ fontFamily: "'Cormorant Garamond', serif" }} className="text-2xl font-light text-[#FFFAEC] mb-2">Reset Password</h1>
           <p className="text-xs text-[#6B6B6B] mb-8 tracking-wide">Enter your email to receive a reset link</p>
-
           {status === "sent" ? (
             <div className="text-center py-4">
               <div className="text-[#C9A84C] text-3xl mb-4">✓</div>
@@ -49,11 +48,9 @@ export default function ForgotPasswordPage() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className="block text-[11px] tracking-widest uppercase text-[#6B6B6B] mb-2">Email</label>
-                <input
-                  type="email" value={email} onChange={e => setEmail(e.target.value)} required
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
                   className="w-full bg-[#1A1A1A] border border-[#C9A84C]/20 text-[#FFFAEC] text-sm px-4 py-3 outline-none focus:border-[#C9A84C]/60 transition-colors"
-                  placeholder="aurelionluxury@gmail.com"
-                />
+                  placeholder="aurelionluxury@gmail.com" />
               </div>
               {status === "error" && <p className="text-red-400 text-xs border border-red-400/20 bg-red-400/5 px-3 py-2">{message}</p>}
               <button type="submit" disabled={status === "loading"}
