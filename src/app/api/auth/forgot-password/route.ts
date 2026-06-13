@@ -32,7 +32,7 @@ export async function POST(req: Request) {
 
     await transporter.sendMail({
       from: `"Aurelion Luxury" <${process.env.GMAIL_USER}>`,
-      to: email,
+      to: process.env.GMAIL_USER,
       subject: "Admin Password Reset — Aurelion Luxury",
       html: `
         <div style="font-family: Georgia, serif; max-width: 480px; margin: 0 auto; background: #0a0a0c; color: #fff; padding: 40px;">
