@@ -1,10 +1,8 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
-/* ── types ── */
 interface Post {
   id: number;
   title: string;
@@ -22,7 +20,6 @@ interface Props {
   related: Post[];
 }
 
-/* ── design tokens ── */
 const gold = "#D4AF37";
 const textPrimary = "rgba(255,255,255,0.88)";
 const textSecondary = "rgba(255,255,255,0.55)";
@@ -40,51 +37,37 @@ const contentContainerStyle: React.CSSProperties = {
 };
 
 const glassCard: React.CSSProperties = {
-  background:
-    "linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))",
+  background: "linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))",
   border: "1px solid rgba(255,255,255,0.06)",
   borderRadius: 12,
   backdropFilter: "blur(20px)",
   overflow: "hidden",
 };
 
-/* ── helpers ── */
 function getCategoryColor(cat: string | null): string {
   switch (cat) {
-    case "Real Estate":
-      return "linear-gradient(135deg, #0d1b2e 0%, #1a2a45 60%, #0d1b2e 100%)";
-    case "Automobiles":
-      return "linear-gradient(135deg, #0d1a25 0%, #1a2d3d 60%, #0d1a25 100%)";
-    case "Financial Planning":
-      return "linear-gradient(135deg, #0d1f0d 0%, #152e15 60%, #0d1f0d 100%)";
-    case "Market Trends":
-      return "linear-gradient(135deg, #1a0d2e 0%, #2a1a45 60%, #1a0d2e 100%)";
-    default:
-      return "linear-gradient(135deg, #0d0d1a 0%, #1a1a2e 60%, #0d0d1a 100%)";
+    case "Real Estate": return "linear-gradient(135deg, #0d1b2e 0%, #1a2a45 60%, #0d1b2e 100%)";
+    case "Automobiles": return "linear-gradient(135deg, #0d1a25 0%, #1a2d3d 60%, #0d1a25 100%)";
+    case "Financial Planning": return "linear-gradient(135deg, #0d1f0d 0%, #152e15 60%, #0d1f0d 100%)";
+    case "Market Trends": return "linear-gradient(135deg, #1a0d2e 0%, #2a1a45 60%, #1a0d2e 100%)";
+    default: return "linear-gradient(135deg, #0d0d1a 0%, #1a1a2e 60%, #0d0d1a 100%)";
   }
 }
 
 function getCategoryAccent(cat: string | null): string {
   switch (cat) {
-    case "Real Estate":
-      return "#4a90d9";
-    case "Automobiles":
-      return "#7ab3cc";
-    case "Financial Planning":
-      return "#6abf69";
-    case "Market Trends":
-      return "#9c6abf";
-    default:
-      return gold;
+    case "Real Estate": return "#4a90d9";
+    case "Automobiles": return "#7ab3cc";
+    case "Financial Planning": return "#6abf69";
+    case "Market Trends": return "#9c6abf";
+    default: return gold;
   }
 }
 
 function formatDate(date: Date | null): string {
   if (!date) return "";
   return new Intl.DateTimeFormat("en-IN", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+    day: "numeric", month: "long", year: "numeric",
   }).format(new Date(date));
 }
 
@@ -93,24 +76,17 @@ function calcReadingTime(content: string | null): number {
   return Math.max(1, Math.ceil(content.split(" ").length / 200));
 }
 
-/* ── FadeUp helper ── */
-function FadeUp({
-  children,
-  delay = 0,
-  style,
-}: {
+function FadeUp({ children, delay = 0, style }: {
   children: React.ReactNode;
   delay?: number;
   style?: React.CSSProperties;
 }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.2 });
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.7, delay }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0 }}
+      transition={{ duration: 0.6, delay }}
       style={style}
     >
       {children}
@@ -118,74 +94,50 @@ function FadeUp({
   );
 }
 
-/* ── Related card ── */
 function RelatedCard({ post, index }: { post: Post; index: number }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.2 });
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       className="related-card-wrapper"
     >
       <Link href={`/blog/${post.slug}`} style={{ textDecoration: "none" }}>
         <div className="related-card" style={glassCard}>
-          <div
-            style={{
-              height: 140,
-              background: post.coverImage
-                ? `url(${post.coverImage}) center/cover no-repeat`
-                : getCategoryColor(post.category),
-              position: "relative",
-            }}
-          >
+          <div style={{
+            height: 140,
+            background: post.coverImage
+              ? `url(${post.coverImage}) center/cover no-repeat`
+              : getCategoryColor(post.category),
+            position: "relative",
+          }}>
             {post.category && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: 10,
-                  right: 10,
-                  background: "rgba(10,10,12,0.75)",
-                  borderRadius: 4,
-                  padding: "3px 8px",
-                  fontSize: 9,
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  color: getCategoryAccent(post.category),
-                  fontFamily: "'DM Sans', var(--font-body), sans-serif",
-                }}
-              >
+              <div style={{
+                position: "absolute", top: 10, right: 10,
+                background: "rgba(10,10,12,0.75)", borderRadius: 4,
+                padding: "3px 8px", fontSize: 9, letterSpacing: "0.1em",
+                textTransform: "uppercase", color: getCategoryAccent(post.category),
+                fontFamily: "'DM Sans', var(--font-body), sans-serif",
+              }}>
                 {post.category}
               </div>
             )}
           </div>
           <div style={{ padding: "16px 18px 18px" }}>
-            <h4
-              style={{
-                fontFamily: "'Cormorant Garamond', var(--font-heading), serif",
-                fontWeight: 300,
-                fontSize: "1.05rem",
-                color: textPrimary,
-                lineHeight: 1.3,
-                marginBottom: 8,
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-              }}
-            >
+            <h4 style={{
+              fontFamily: "'Cormorant Garamond', var(--font-heading), serif",
+              fontWeight: 300, fontSize: "1.05rem", color: textPrimary,
+              lineHeight: 1.3, marginBottom: 8,
+              display: "-webkit-box", WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical", overflow: "hidden",
+            }}>
               {post.title}
             </h4>
-            <span
-              style={{
-                fontSize: 11,
-                color: textMuted,
-                fontFamily: "'DM Sans', var(--font-body), sans-serif",
-                fontWeight: 300,
-              }}
-            >
+            <span style={{
+              fontSize: 11, color: textMuted,
+              fontFamily: "'DM Sans', var(--font-body), sans-serif", fontWeight: 300,
+            }}>
               {formatDate(post.publishedAt)}
             </span>
           </div>
@@ -195,45 +147,24 @@ function RelatedCard({ post, index }: { post: Post; index: number }) {
   );
 }
 
-/* ── Share button ── */
-function ShareButton({
-  href,
-  label,
-  icon,
-}: {
-  href: string;
-  label: string;
-  icon: React.ReactNode;
+function ShareButton({ href, label, icon }: {
+  href: string; label: string; icon: React.ReactNode;
 }) {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="share-btn"
+    <a href={href} target="_blank" rel="noopener noreferrer" className="share-btn"
       style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 8,
-        padding: "9px 18px",
-        border: "1px solid rgba(212,175,55,0.25)",
-        borderRadius: 6,
-        fontSize: 12,
-        letterSpacing: "0.06em",
-        color: gold,
-        textDecoration: "none",
+        display: "inline-flex", alignItems: "center", gap: 8,
+        padding: "9px 18px", border: "1px solid rgba(212,175,55,0.25)",
+        borderRadius: 6, fontSize: 12, letterSpacing: "0.06em",
+        color: gold, textDecoration: "none",
         fontFamily: "'DM Sans', var(--font-body), sans-serif",
-        fontWeight: 300,
-        transition: "background 0.2s ease, border-color 0.2s ease",
-      }}
-    >
-      {icon}
-      {label}
+        fontWeight: 300, transition: "background 0.2s ease, border-color 0.2s ease",
+      }}>
+      {icon}{label}
     </a>
   );
 }
 
-/* ── WhatsApp icon ── */
 function WAIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill={gold}>
@@ -258,14 +189,11 @@ function XIcon() {
   );
 }
 
-/* ── main component ── */
 export default function BlogPostClient({ post, related }: Props) {
   const readingTime = calcReadingTime(post.content);
 
   function getShareUrls() {
-    if (typeof window === "undefined") {
-      return { wa: "#", li: "#", x: "#" };
-    }
+    if (typeof window === "undefined") return { wa: "#", li: "#", x: "#" };
     const url = window.location.href;
     return {
       wa: `https://wa.me/?text=${encodeURIComponent(post.title + " " + url)}`,
@@ -280,7 +208,7 @@ export default function BlogPostClient({ post, related }: Props) {
     <>
       <style>{`
         .article-content h2 {
-          font-family: 'Cormorant Garamond', var(--font-heading), serif;
+          font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
           color: rgba(255,255,255,0.88);
           font-size: 1.8rem;
@@ -289,7 +217,7 @@ export default function BlogPostClient({ post, related }: Props) {
           line-height: 1.25;
         }
         .article-content h3 {
-          font-family: 'Cormorant Garamond', var(--font-heading), serif;
+          font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
           color: rgba(255,255,255,0.82);
           font-size: 1.4rem;
@@ -297,23 +225,16 @@ export default function BlogPostClient({ post, related }: Props) {
           margin-top: 1.6rem;
         }
         .article-content p {
-          color: rgba(255,255,255,0.6);
+          color: rgba(255,255,255,0.7) !important;
           line-height: 1.8;
           margin-bottom: 1.2rem;
           font-weight: 300;
-          font-family: 'DM Sans', var(--font-body), sans-serif;
           font-size: 15px;
         }
-        .article-content a {
-          color: #D4AF37;
-          text-decoration: underline;
-          text-decoration-color: rgba(212,175,55,0.35);
-        }
-        .article-content a:hover { text-decoration-color: #D4AF37; }
+        .article-content a { color: #D4AF37; text-decoration: underline; }
         .article-content ul, .article-content ol {
-          color: rgba(255,255,255,0.6);
+          color: rgba(255,255,255,0.7);
           font-weight: 300;
-          font-family: 'DM Sans', var(--font-body), sans-serif;
           font-size: 15px;
           line-height: 1.8;
           padding-left: 1.4rem;
@@ -326,169 +247,85 @@ export default function BlogPostClient({ post, related }: Props) {
           padding: 0.8rem 1.2rem;
           color: rgba(255,255,255,0.55);
           font-style: italic;
-          font-weight: 300;
         }
-        .article-content strong {
-          color: rgba(255,255,255,0.82);
-          font-weight: 400;
-        }
-        .share-btn:hover {
-          background: rgba(212,175,55,0.08);
-          border-color: rgba(212,175,55,0.5);
-        }
-        .related-card {
-          transition: transform 0.3s ease, border-color 0.3s ease;
-          cursor: pointer;
-        }
-        .related-card:hover {
-          transform: translateY(-4px);
-          border-color: rgba(212,175,55,0.3) !important;
-        }
+        .article-content strong { color: rgba(255,255,255,0.88); font-weight: 500; }
+        .share-btn:hover { background: rgba(212,175,55,0.08); border-color: rgba(212,175,55,0.5); }
+        .related-card { transition: transform 0.3s ease, border-color 0.3s ease; cursor: pointer; }
+        .related-card:hover { transform: translateY(-4px); border-color: rgba(212,175,55,0.3) !important; }
         @media (max-width: 700px) {
           .related-grid { grid-template-columns: 1fr !important; }
           .share-row { flex-wrap: wrap !important; }
+          .article-content p { font-size: 16px !important; color: rgba(255,255,255,0.8) !important; }
+          .article-content h2 { font-size: 1.5rem !important; }
+          .article-content h3 { font-size: 1.2rem !important; }
         }
       `}</style>
 
-      {/* ── COVER ── */}
-      <section
-        style={{
-          background: post.coverImage ? "#0a0a0c" : "#0a0a0c",
-          paddingTop: 80,
-        }}
-      >
-        <div
-          style={{
-            height: 500,
-            position: "relative",
-            background: post.coverImage
-              ? `url(${post.coverImage}) center/cover no-repeat`
-              : getCategoryColor(post.category),
-            overflow: "hidden",
-          }}
-        >
-          {/* category watermark */}
+      {/* COVER */}
+      <section style={{ background: "#0a0a0c", paddingTop: 80 }}>
+        <div style={{
+          height: 500, position: "relative",
+          background: post.coverImage
+            ? `url(${post.coverImage}) center/cover no-repeat`
+            : getCategoryColor(post.category),
+          overflow: "hidden",
+        }}>
           {!post.coverImage && (
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                opacity: 0.05,
-                fontSize: "clamp(60px,12vw,120px)",
-                fontFamily: "'Cormorant Garamond', var(--font-heading), serif",
-                fontWeight: 300,
-                color: "#fff",
-                textAlign: "center",
-                padding: "0 24px",
-                lineHeight: 1.1,
-              }}
-            >
+            <div style={{
+              position: "absolute", inset: 0, display: "flex",
+              alignItems: "center", justifyContent: "center",
+              opacity: 0.05, fontSize: "clamp(60px,12vw,120px)",
+              fontFamily: "'Cormorant Garamond', serif", fontWeight: 300,
+              color: "#fff", textAlign: "center", padding: "0 24px", lineHeight: 1.1,
+            }}>
               {post.category || "Aurelion"}
             </div>
           )}
-          {/* gradient overlay */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background:
-                "linear-gradient(to bottom, rgba(10,10,12,0.3) 0%, rgba(10,10,12,0.85) 100%)",
-            }}
-          />
-          {/* content overlay */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              padding: "0 clamp(24px,5vw,80px) 48px",
-              maxWidth: 1400,
-              margin: "0 auto",
-            }}
-          >
+          <div style={{
+            position: "absolute", inset: 0,
+            background: "linear-gradient(to bottom, rgba(10,10,12,0.3) 0%, rgba(10,10,12,0.85) 100%)",
+          }} />
+          <div style={{
+            position: "absolute", bottom: 0, left: 0, right: 0,
+            padding: "0 clamp(24px,5vw,80px) 48px",
+            maxWidth: 1400, margin: "0 auto",
+          }}>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
               {post.category && (
-                <div
-                  style={{
-                    display: "inline-block",
-                    background: "rgba(10,10,12,0.6)",
-                    backdropFilter: "blur(8px)",
-                    border: `1px solid ${getCategoryAccent(post.category)}40`,
-                    borderRadius: 4,
-                    padding: "5px 12px",
-                    fontSize: 10,
-                    letterSpacing: "0.12em",
-                    textTransform: "uppercase",
-                    color: getCategoryAccent(post.category),
-                    fontFamily: "'DM Sans', var(--font-body), sans-serif",
-                    marginBottom: 16,
-                  }}
-                >
+                <div style={{
+                  display: "inline-block", background: "rgba(10,10,12,0.6)",
+                  backdropFilter: "blur(8px)",
+                  border: `1px solid ${getCategoryAccent(post.category)}40`,
+                  borderRadius: 4, padding: "5px 12px", fontSize: 10,
+                  letterSpacing: "0.12em", textTransform: "uppercase",
+                  color: getCategoryAccent(post.category), marginBottom: 16,
+                }}>
                   {post.category}
                 </div>
               )}
-              <h1
-                style={{
-                  fontFamily:
-                    "'Cormorant Garamond', var(--font-heading), serif",
-                  fontWeight: 300,
-                  fontSize: "clamp(1.9rem,4vw,2.8rem)",
-                  color: textPrimary,
-                  lineHeight: 1.2,
-                  marginBottom: 20,
-                  maxWidth: 800,
-                }}
-              >
+              <h1 style={{
+                fontFamily: "'Cormorant Garamond', serif", fontWeight: 300,
+                fontSize: "clamp(1.9rem,4vw,2.8rem)", color: textPrimary,
+                lineHeight: 1.2, marginBottom: 20, maxWidth: 800,
+              }}>
                 {post.title}
               </h1>
-              <div
-                style={{
-                  display: "flex",
-                  gap: 20,
-                  flexWrap: "wrap",
-                  alignItems: "center",
-                }}
-              >
+              <div style={{ display: "flex", gap: 20, flexWrap: "wrap", alignItems: "center" }}>
                 {post.author && (
-                  <span
-                    style={{
-                      fontSize: 13,
-                      color: textSecondary,
-                      fontFamily: "'DM Sans', var(--font-body), sans-serif",
-                      fontWeight: 300,
-                    }}
-                  >
+                  <span style={{ fontSize: 13, color: textSecondary, fontWeight: 300 }}>
                     By {post.author}
                   </span>
                 )}
                 {post.publishedAt && (
-                  <span
-                    style={{
-                      fontSize: 13,
-                      color: textMuted,
-                      fontFamily: "'DM Sans', var(--font-body), sans-serif",
-                      fontWeight: 300,
-                    }}
-                  >
+                  <span style={{ fontSize: 13, color: textMuted, fontWeight: 300 }}>
                     {formatDate(post.publishedAt)}
                   </span>
                 )}
-                <span
-                  style={{
-                    fontSize: 13,
-                    color: textMuted,
-                    fontFamily: "'DM Sans', var(--font-body), sans-serif",
-                    fontWeight: 300,
-                  }}
-                >
+                <span style={{ fontSize: 13, color: textMuted, fontWeight: 300 }}>
                   {readingTime} min read
                 </span>
               </div>
@@ -497,13 +334,8 @@ export default function BlogPostClient({ post, related }: Props) {
         </div>
       </section>
 
-      {/* ── CONTENT ── */}
-      <section
-        style={{
-          background: "#111114",
-          padding: "clamp(48px,7vh,80px) 0",
-        }}
-      >
+      {/* CONTENT */}
+      <section style={{ background: "#111114", padding: "clamp(48px,7vh,80px) 0" }}>
         <div style={containerStyle}>
           <div style={contentContainerStyle}>
             <FadeUp>
@@ -513,100 +345,33 @@ export default function BlogPostClient({ post, related }: Props) {
                   dangerouslySetInnerHTML={{ __html: post.content }}
                 />
               ) : (
-                <div
-                  style={{
-                    textAlign: "center",
-                    padding: "clamp(40px,8vh,80px) 0",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 56,
-                      height: 56,
-                      borderRadius: "50%",
-                      border: "1px solid rgba(212,175,55,0.2)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      margin: "0 auto 20px",
-                      fontSize: 22,
-                      color: gold,
-                      opacity: 0.6,
-                    }}
-                  >
-                    ✦
-                  </div>
-                  <p
-                    style={{
-                      fontFamily:
-                        "'Cormorant Garamond', var(--font-heading), serif",
-                      fontWeight: 300,
-                      fontSize: "1.4rem",
-                      color: textSecondary,
-                    }}
-                  >
+                <div style={{ textAlign: "center", padding: "clamp(40px,8vh,80px) 0" }}>
+                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: "1.4rem", color: textSecondary }}>
                     Content coming soon
-                  </p>
-                  <p
-                    style={{
-                      fontSize: 13,
-                      color: textMuted,
-                      fontWeight: 300,
-                      fontFamily: "'DM Sans', var(--font-body), sans-serif",
-                      marginTop: 10,
-                    }}
-                  >
-                    Our editorial team is preparing this piece.
                   </p>
                 </div>
               )}
             </FadeUp>
 
-            {/* divider */}
-            <div
-              style={{
-                height: 1,
-                background:
-                  "linear-gradient(to right, transparent, rgba(212,175,55,0.2), transparent)",
-                margin: "40px 0",
-              }}
-            />
+            <div style={{
+              height: 1,
+              background: "linear-gradient(to right, transparent, rgba(212,175,55,0.2), transparent)",
+              margin: "40px 0",
+            }} />
 
-            {/* ── SHARE ── */}
+            {/* SHARE */}
             <FadeUp delay={0.1}>
               <div>
-                <p
-                  style={{
-                    fontSize: 11,
-                    letterSpacing: "0.15em",
-                    textTransform: "uppercase",
-                    color: textMuted,
-                    fontFamily: "'DM Sans', var(--font-body), sans-serif",
-                    fontWeight: 400,
-                    marginBottom: 16,
-                  }}
-                >
+                <p style={{
+                  fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase",
+                  color: textMuted, fontWeight: 400, marginBottom: 16,
+                }}>
                   Share this article
                 </p>
-                <div
-                  className="share-row"
-                  style={{ display: "flex", gap: 10, flexWrap: "wrap" }}
-                >
-                  <ShareButton
-                    href={shareUrls.wa}
-                    label="WhatsApp"
-                    icon={<WAIcon />}
-                  />
-                  <ShareButton
-                    href={shareUrls.li}
-                    label="LinkedIn"
-                    icon={<LinkedInIcon />}
-                  />
-                  <ShareButton
-                    href={shareUrls.x}
-                    label="X (Twitter)"
-                    icon={<XIcon />}
-                  />
+                <div className="share-row" style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                  <ShareButton href={shareUrls.wa} label="WhatsApp" icon={<WAIcon />} />
+                  <ShareButton href={shareUrls.li} label="LinkedIn" icon={<LinkedInIcon />} />
+                  <ShareButton href={shareUrls.x} label="X (Twitter)" icon={<XIcon />} />
                 </div>
               </div>
             </FadeUp>
@@ -614,50 +379,27 @@ export default function BlogPostClient({ post, related }: Props) {
         </div>
       </section>
 
-      {/* ── RELATED ARTICLES ── */}
+      {/* RELATED */}
       {related.length > 0 && (
-        <section
-          style={{
-            background: "#0a0a0c",
-            padding: "clamp(60px,8vh,100px) 0",
-          }}
-        >
+        <section style={{ background: "#0a0a0c", padding: "clamp(60px,8vh,100px) 0" }}>
           <div style={containerStyle}>
             <FadeUp>
-              <p
-                style={{
-                  fontSize: 12,
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                  color: gold,
-                  fontFamily: "'DM Sans', var(--font-body), sans-serif",
-                  fontWeight: 400,
-                  marginBottom: 12,
-                }}
-              >
+              <p style={{
+                fontSize: 12, letterSpacing: "0.15em", textTransform: "uppercase",
+                color: gold, fontWeight: 400, marginBottom: 12,
+              }}>
                 Continue Reading
               </p>
-              <h2
-                style={{
-                  fontFamily:
-                    "'Cormorant Garamond', var(--font-heading), serif",
-                  fontWeight: 300,
-                  fontSize: "clamp(1.6rem,3vw,2.2rem)",
-                  color: textPrimary,
-                  marginBottom: 36,
-                }}
-              >
+              <h2 style={{
+                fontFamily: "'Cormorant Garamond', serif", fontWeight: 300,
+                fontSize: "clamp(1.6rem,3vw,2.2rem)", color: textPrimary, marginBottom: 36,
+              }}>
                 Related Articles
               </h2>
             </FadeUp>
-            <div
-              className="related-grid"
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: 22,
-              }}
-            >
+            <div className="related-grid" style={{
+              display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 22,
+            }}>
               {related.map((p, i) => (
                 <RelatedCard key={p.id} post={p} index={i} />
               ))}
@@ -666,28 +408,16 @@ export default function BlogPostClient({ post, related }: Props) {
         </section>
       )}
 
-      {/* ── BACK LINK ── */}
-      <section
-        style={{
-          background: "#111114",
-          padding: "32px 0",
-          borderTop: "1px solid rgba(255,255,255,0.04)",
-        }}
-      >
+      {/* BACK */}
+      <section style={{
+        background: "#111114", padding: "32px 0",
+        borderTop: "1px solid rgba(255,255,255,0.04)",
+      }}>
         <div style={containerStyle}>
-          <Link
-            href="/blog"
-            style={{
-              fontSize: 12,
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              color: textMuted,
-              textDecoration: "none",
-              fontFamily: "'DM Sans', var(--font-body), sans-serif",
-              fontWeight: 300,
-              transition: "color 0.2s ease",
-            }}
-          >
+          <Link href="/blog" style={{
+            fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase",
+            color: textMuted, textDecoration: "none", fontWeight: 300,
+          }}>
             ← Back to all articles
           </Link>
         </div>
