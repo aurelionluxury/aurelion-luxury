@@ -5,15 +5,9 @@ import BlogPostClient from "@/components/blog/BlogPostClient";
 
 type Params = Promise<{ slug: string }>;
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Params;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params;
-  const post = await prisma.post.findUnique({
-    where: { slug, isPublished: true },
-  });
+  const post = await prisma.post.findUnique({ where: { slug, isPublished: true } });
   if (!post) return { title: "Post Not Found" };
   return {
     title: `${post.title} | Aurelion Luxury`,
@@ -32,6 +26,13 @@ export default async function BlogPostPage({ params }: { params: Params }) {
     }),
   ]);
   if (!post) notFound();
+
+  // Increment view count
+  await prisma.post.update({
+    where: { id: post.id },
+    data: { views: { increment: 1 } },
+  });
+
   const relatedFiltered = related.filter((p: any) => p.id !== post.id).slice(0, 3);
   return <BlogPostClient post={post} related={relatedFiltered} />;
 }
