@@ -111,7 +111,7 @@ export default function PostForm({ initial, isEdit }: PostFormProps) {
             <h2 className="text-xs tracking-widest uppercase text-[#C9A84C]">Details</h2>
             <Field label="Category">
               <Select value={form.category} onChange={(e) => set("category", e.target.value)}>
-                {["real_estate", "automobiles", "financial_planning", "market_trends"].map(c => (
+                {["real_estate", "automobiles", "financial_planning", "market_trends", "general", "society"].map(c => (
                   <option key={c} value={c}>{c.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase())}</option>
                 ))}
               </Select>
